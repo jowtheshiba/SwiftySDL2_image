@@ -7,7 +7,7 @@ let package = Package(
         .macOS(.v13)
     ],
     products: [
-        .library(name: "SDL2Image", targets: ["SDL2Image"])
+        .library(name: "SwiftySDL2_image", targets: ["SwiftySDL2_image"])
     ],
     targets: [
         .systemLibrary(
@@ -19,7 +19,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "SDL2Image",
+            name: "SwiftySDL2_image",
             dependencies: ["CSDL2Image"]
         )
     ]

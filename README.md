@@ -23,7 +23,7 @@ sudo apt-get install -y libsdl2-dev libsdl2-image-dev pkg-config
 ### Example 1: Load a PNG as SDL_Texture
 Assumes you already created an `SDL_Renderer`.
 ```swift
-import SDL2Image
+import SwiftySDL2_image
 
 try SDL2Image.initialize(flags: [.png])
 let texture = try SDL2Image.loadTexture(renderer: renderer, path: "image.png")
@@ -33,7 +33,7 @@ SDL2Image.quit()
 
 ### Example 2: Load a Surface and save it as PNG (or JPG)
 ```swift
-import SDL2Image
+import SwiftySDL2_image
 
 try SDL2Image.initialize() // enables PNG/JPG/TIF/WebP by default
 let surface = try SDL2Image.loadSurface(path: "image.png")
@@ -45,7 +45,7 @@ SDL2Image.quit()
 
 ### Example 3 (optional): Load a texture from in-memory PNG data (RWops)
 ```swift
-import SDL2Image
+import SwiftySDL2_image
 
 // data: [UInt8] holds the PNG bytes
 let texture: UnsafeMutablePointer<SDL_Texture>
