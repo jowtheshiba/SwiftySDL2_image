@@ -18,10 +18,10 @@ public struct SDLImageInitFlags: OptionSet {
     public let rawValue: Int32
     public init(rawValue: Int32) { self.rawValue = rawValue }
 
-    public static let jpg  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_JPG))
-    public static let png  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_PNG))
-    public static let tif  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_TIF))
-    public static let webp = SDLImageInitFlags(rawValue: Int32(IMG_INIT_WEBP))
+    public static let jpg  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_JPG.rawValue))
+    public static let png  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_PNG.rawValue))
+    public static let tif  = SDLImageInitFlags(rawValue: Int32(IMG_INIT_TIF.rawValue))
+    public static let webp = SDLImageInitFlags(rawValue: Int32(IMG_INIT_WEBP.rawValue))
 }
 
 public struct SDLImageVersion {
@@ -52,9 +52,7 @@ public struct SDL2Image {
         return SDLImageVersion(major: ver.major, minor: ver.minor, patch: ver.patch)
     }
 
-    public static func getError() -> String {
-        String(cString: IMG_GetError())
-    }
+    public static func getError() -> String { String(cString: SDL_GetError()) }
 
     // MARK: - Surface Loading
     public static func loadSurface(path: String) throws -> UnsafeMutablePointer<SDL_Surface> {
@@ -79,21 +77,21 @@ public struct SDL2Image {
     }
 
     // MARK: - Texture Loading
-    public static func loadTexture(renderer: UnsafeMutablePointer<SDL_Renderer>, path: String) throws -> UnsafeMutablePointer<SDL_Texture> {
+    public static func loadTexture(renderer: OpaquePointer, path: String) throws -> OpaquePointer {
         guard let texture = IMG_LoadTexture(renderer, path) else {
             throw SDLImageError.operationFailed(getError())
         }
         return texture
     }
 
-    public static func loadTexture(renderer: UnsafeMutablePointer<SDL_Renderer>, fromRW rwops: UnsafeMutablePointer<SDL_RWops>, freeSource: Bool) throws -> UnsafeMutablePointer<SDL_Texture> {
+    public static func loadTexture(renderer: OpaquePointer, fromRW rwops: UnsafeMutablePointer<SDL_RWops>, freeSource: Bool) throws -> OpaquePointer {
         guard let texture = IMG_LoadTexture_RW(renderer, rwops, freeSource ? 1 : 0) else {
             throw SDLImageError.operationFailed(getError())
         }
         return texture
     }
 
-    public static func loadTexture(renderer: UnsafeMutablePointer<SDL_Renderer>, fromRW rwops: UnsafeMutablePointer<SDL_RWops>, typeHint: String, freeSource: Bool) throws -> UnsafeMutablePointer<SDL_Texture> {
+    public static func loadTexture(renderer: OpaquePointer, fromRW rwops: UnsafeMutablePointer<SDL_RWops>, typeHint: String, freeSource: Bool) throws -> OpaquePointer {
         guard let texture = IMG_LoadTextureTyped_RW(renderer, rwops, freeSource ? 1 : 0, typeHint) else {
             throw SDLImageError.operationFailed(getError())
         }
